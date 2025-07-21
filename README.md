@@ -15,7 +15,13 @@
 > Features comprehensive testing with Jest (unit & E2E), API documentation with Swagger, and modern monitoring via Prometheus, Grafana, and Loki.  
 > Fully containerized with Docker for streamlined deployments.
 
-**🔗 Live Repo:** [github.com/Dev-Ankit-Ks/Break-Mash-Backend](https://github.com/Dev-Ankit-Ks/Break-Mash-Backend)
+---
+
+## 📸 Screenshots
+
+> Visual overview of Swagger docs, Prometheus, and Grafana dashboards. Replace the placeholders below with your actual URLs or paths.
+<img width="1918" height="1078" alt="Image" src="https://github.com/user-attachments/assets/b0a98475-5dcf-467f-af5e-fedb467294d1" />
+<img width="1902" height="1078" alt="Image" src="https://github.com/user-attachments/assets/e0b3142a-3c50-4285-b351-24e335f08656" />
 
 ---
 
