@@ -1,0 +1,7 @@
+Prisma use 
+
+npm i prisma
+npx prisma 
+npx prisma init
+npm i @prisma/client
+npx prisma migrate dev --name createdandupdated

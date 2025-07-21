@@ -1,0 +1,565 @@
+# openapi: 3.0.0
+# info:
+#   title: Welcome to API Docs
+#   description: RESTful API for News App
+#   version: 1.0.0
+#   contact:
+#     name: Ankit Kumar
+#     email: devankit.ks@gmail.com
+
+# servers:
+#   - url: http://localhost:5000/api
+#     description: Local development server
+
+# tags:
+#   - name: Auth
+#     description: Authentication and user access
+#   - name: Profile
+#     description: Profile management (protected routes)
+#   - name: Emails
+#     description: Send emails to client
+
+# paths:
+#   /auth/register:
+#     post:
+#       tags: [Auth]
+#       summary: Register a new user
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               required:
+#                 - name
+#                 - email
+#                 - password
+#                 - password_confirmation
+#               properties:
+#                 name:
+#                   type: string
+#                   example: Ankit Kumar
+#                 email:
+#                   type: string
+#                   format: email
+#                   example: ankit@example.com
+#                 password:
+#                   type: string
+#                   format: password
+#                   example: mySecret123
+#                 password_confirmation:
+#                   type: string
+#                   format: password
+#                   example: mySecret123
+#       responses:
+#         "200":
+#           description: User registered successfully
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 200
+#                   user:
+#                     type: object
+#         "400":
+#           description: Validation or email already exists
+#         "500":
+#           description: Internal server error
+
+#   /auth/login:
+#     post:
+#       tags: [Auth]
+#       summary: Login user with email and password
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               required:
+#                 - email
+#                 - password
+#               properties:
+#                 email:
+#                   type: string
+#                   format: email
+#                   example: ankit@example.com
+#                 password:
+#                   type: string
+#                   format: password
+#                   example: mySecret123
+#       responses:
+#         "200":
+#           description: Login successful with JWT token
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   details:
+#                     type: object
+#                     properties:
+#                       id:
+#                         type: integer
+#                       name:
+#                         type: string
+#                       email:
+#                         type: string
+#                       profile:
+#                         type: string
+#                   token:
+#                     type: string
+#                     example: your.jwt.token.here
+#         "400":
+#           description: Validation error
+#         "401":
+#           description: Invalid credentials
+#         "500":
+#           description: Internal server error
+
+#   /send-email:
+#     post:
+#       tags: [Emails]
+#       summary: Send a test email
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               required:
+#                 - email
+#               properties:
+#                 email:
+#                   type: string
+#                   format: email
+#                   example: ankit@example.com
+#       responses:
+#         "200":
+#           description: Email sent successfully
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 200
+#                   message:
+#                     type: string
+#                     example: Email sent
+#         "400":
+#           description: Error sending email
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 400
+#                   message:
+#                     type: string
+#                     example: Error
+#                   error:
+#                     type: string
+#                     example: Email service not available
+
+#   /profile:
+#     get:
+#       tags: [Profile]
+#       summary: Get logged-in user profile
+#       security:
+#         - apiKeyAuth: []
+#       responses:
+#         "200":
+#           description: Returns user profile
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 200
+#                   user:
+#                     type: object
+#                     properties:
+#                       id:
+#                         type: integer
+#                       name:
+#                         type: string
+#                       email:
+#                         type: string
+#                       profile:
+#                         type: string
+#         "401":
+#           description: Unauthorized or invalid token
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 401
+#                   messages:
+#                     type: string
+#                     example: UnAuthorized
+
+#   /profile/{id}:
+#     put:
+#       tags: [Profile]
+#       summary: Update user's profile picture
+#       security:
+#         - apiKeyAuth: []
+#       parameters:
+#         - name: id
+#           in: path
+#           required: true
+#           schema:
+#             type: integer
+#           example: 1
+#       requestBody:
+#         required: true
+#         content:
+#           multipart/form-data:
+#             schema:
+#               type: object
+#               required:
+#                 - profile
+#               properties:
+#                 profile:
+#                   type: string
+#                   format: binary
+#       responses:
+#         "200":
+#           description: Profile updated successfully
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   status:
+#                     type: integer
+#                     example: 200
+#                   message:
+#                     type: string
+#                     example: Profile updated successfully!
+#         "400":
+#           description: Validation error or missing file
+#         "401":
+#           description: Unauthorized
+#         "500":
+#           description: Internal server error
+
+# components:
+#   securitySchemes:
+#     apiKeyAuth:
+#       type: apiKey
+#       in: header
+#       name: Authorization
+
+openapi: 3.0.0
+info:
+  title: Welcome to API Docs
+  description: RESTful API for News App
+  version: 1.0.0
+  contact:
+    name: Ankit Kumar
+    email: devankit.ks@gmail.com
+
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+
+tags:
+  - name: Auth
+    description: Authentication and user access
+  - name: Profile
+    description: Profile management (protected routes)
+  - name: Emails
+    description: Send emails to client
+  - name: News
+    description: CRUD operations for news
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+              properties:
+                name:
+                  type: string
+                  example: Ankit Kumar
+                email:
+                  type: string
+                  format: email
+                  example: ankit@example.com
+                password:
+                  type: string
+                  format: password
+                  example: mySecret123
+                password_confirmation:
+                  type: string
+                  format: password
+                  example: mySecret123
+      responses:
+        "200":
+          description: User registered successfully
+        "400":
+          description: Validation or email already exists
+        "500":
+          description: Internal server error
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: ankit@example.com
+                password:
+                  type: string
+                  format: password
+                  example: mySecret123
+      responses:
+        "200":
+          description: Login successful with JWT token
+        "400":
+          description: Validation error
+        "401":
+          description: Invalid credentials
+        "500":
+          description: Internal server error
+
+  /send-email:
+    post:
+      tags: [Emails]
+      summary: Send a test email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: ankit@example.com
+      responses:
+        "200":
+          description: Email sent successfully
+        "400":
+          description: Error sending email
+
+  /profile:
+    get:
+      tags: [Profile]
+      summary: Get logged-in user profile
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          description: Returns user profile
+        "401":
+          description: Unauthorized or invalid token
+
+  /profile/{id}:
+    put:
+      tags: [Profile]
+      summary: Update user's profile picture
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - profile
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Profile updated successfully
+        "400":
+          description: Validation error or missing file
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+
+  /news:
+    get:
+      tags: [News]
+      summary: Get all news (paginated, cached)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: Page number
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Number of results per page
+      responses:
+        "200":
+          description: A list of news
+        "500":
+          description: Internal server error
+
+    post:
+      tags: [News]
+      summary: Create a news post (authenticated)
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+                - image
+              properties:
+                title:
+                  type: string
+                  example: Breaking News
+                content:
+                  type: string
+                  example: Some detailed description
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: News created successfully
+        "400":
+          description: Validation error or image required
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+
+  /news/{id}:
+    get:
+      tags: [News]
+      summary: Get a single news by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Returns a single news post
+        "404":
+          description: Not found
+        "500":
+          description: Internal server error
+
+    put:
+      tags: [News]
+      summary: Update a news post (authenticated)
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Updated Title
+                content:
+                  type: string
+                  example: Updated Description
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: News updated successfully
+        "400":
+          description: Validation or image error
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+
+    delete:
+      tags: [News]
+      summary: Delete a news post (authenticated)
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: News deleted successfully
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
