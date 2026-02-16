@@ -1,8 +1,7 @@
 import redis from "express-redis-cache";
 import "dotenv/config";
 const redisCache = redis({
-  port: process.env.REDIS_PORT || 6379,
-  host: process.env.REDIS_HOST || "localhost",
+  url: process.env.REDIS_URL,
   prefix: "master_backend",
   expire: 60 * 60,
 });
