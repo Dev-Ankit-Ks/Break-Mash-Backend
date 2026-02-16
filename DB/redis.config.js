@@ -1,5 +1,7 @@
 import redis from "express-redis-cache";
 import "dotenv/config";
+console.log("ENV DEBUG → REDIS_URL:", process.env.REDIS_URL);
+
 const redisCache = redis({
   url: process.env.REDIS_URL,
   prefix: "master_backend",
