@@ -27,14 +27,15 @@ import "dotenv/config";
 console.log("ENV DEBUG → REDIS_URL:", process.env.REDIS_URL);
 
 const redisCache = new Redis(process.env.REDIS_URL, {
-  tls: {}, // ✅ IMPORTANT for Railway TLS proxy
+  tls: {}, // ✅ Required for Railway
 });
 
-redis.on("connect", () => {
+// ✅ Attach events to INSTANCE
+redisCache.on("connect", () => {
   console.log("✅ Redis connected successfully!");
 });
 
-redis.on("error", (err) => {
+redisCache.on("error", (err) => {
   console.error("❌ Redis error:", err);
 });
 
