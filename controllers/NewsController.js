@@ -93,20 +93,13 @@ class NewsController {
         data: payload,
       });
 
-      // redisCache.del("news_cache", (err) => {
-      //   if (err) {
-      //     console.error("Redis del error:", err);
-      //   } else {
-      //     console.log("Cache 'news_cache' cleared.");
-      //   }
-      // });
-
-      try {
-        await redisCache.del("news_cache");
-        console.log("🧹 Cache 'news_cache' cleared");
-      } catch (redisError) {
-        console.error("❌ Redis DEL Error:", redisError.message);
-      }
+      redisCache.del("news_cache", (err) => {
+        if (err) {
+          console.error("Redis del error:", err);
+        } else {
+          console.log("Cache 'news_cache' cleared.");
+        }
+      });
 
       return res.status(200).json({
         message: "News created",

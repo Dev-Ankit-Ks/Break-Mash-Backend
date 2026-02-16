@@ -4,7 +4,6 @@ import ProfileController from "../controllers/ProfileController.js";
 import authMiddleware from "../middleware/Authenticate.js";
 import NewsController from "../controllers/NewsController.js";
 import redisCache from "../DB/redis.config.js";
-import cache from "../middleware/cache.js";
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.put("/profile/:id", authMiddleware, ProfileController.update);
 router.post("/send-email", AuthController.sendEmail);
 
 // News Routes
-router.get("/news", cache("news_cache", 3600), NewsController.index);
+router.get("/news", redisCache.route("news_cache"), NewsController.index);
 router.post("/news", authMiddleware, NewsController.store);
 router.get("/news/:id", NewsController.show);
 router.put("/news/:id", authMiddleware, NewsController.update);
