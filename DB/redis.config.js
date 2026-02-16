@@ -20,23 +20,29 @@
 // });
 
 // export default redisCache;
-
 import Redis from "ioredis";
 import "dotenv/config";
 
 console.log("ENV DEBUG → REDIS_URL:", process.env.REDIS_URL);
 
 const redisCache = new Redis(process.env.REDIS_URL, {
-  tls: {}, // ✅ Required for Railway
+  tls: {
+    rejectUnauthorized: false, // ✅ IMPORTANT for Railway
+  },
+  connectTimeout: 10000, // ✅ prevent early timeout
+  retryStrategy(times) {
+    const delay = Math.min(times * 500, 3000);
+    console.log(`🔄 Redis retry in ${delay}ms`);
+    return delay;
+  },
 });
 
-// ✅ Attach events to INSTANCE
 redisCache.on("connect", () => {
   console.log("✅ Redis connected successfully!");
 });
 
 redisCache.on("error", (err) => {
-  console.error("❌ Redis error:", err);
+  console.error("❌ Redis error:", err.message);
 });
 
 export default redisCache;
