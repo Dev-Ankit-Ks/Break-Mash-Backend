@@ -1,4 +1,4 @@
-import redis from "../DB/redis.config";
+import redis from "../DB/redis.config.js";
 
 const cache = (keyPrefix, ttl = 3600) => {
   return async (req, res, next) => {
