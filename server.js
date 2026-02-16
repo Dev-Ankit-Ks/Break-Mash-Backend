@@ -42,7 +42,7 @@ app.use(
         status_code: req.statusCode,
       })
       .observe(time);
-  })
+  }),
 );
 
 async function checkDBConnection() {
@@ -56,10 +56,9 @@ async function checkDBConnection() {
 }
 
 await checkDBConnection();
-
+app.use(cors()); // ✅ MUST BE BEFORE swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(helmet());
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));

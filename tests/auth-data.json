@@ -1,5 +1,5 @@
 {
-  "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsIm5hbWUiOiJBbmtpdCIsImVtYWlsIjoidXNlcjE3NTI5NzQyNTkxNTNAdGVzdC5jb20iLCJwcm9maWxlIjpudWxsLCJpYXQiOjE3NTI5NzQyNTksImV4cCI6MTc4NDUxMDI1OX0.qp0zi5PdPbX4jhqAOmkeXHN1oSzgj34BPfyg07SmdEk",
-  "userId": 22,
-  "testEmail": "user1752974259153@test.com"
+  "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFua2l0IiwiZW1haWwiOiJ1c2VyMTc3MTI1OTYwODMxMUB0ZXN0LmNvbSIsInByb2ZpbGUiOm51bGwsImlhdCI6MTc3MTI1OTYwOCwiZXhwIjoxODAyNzk1NjA4fQ.Lox5OTyYrjzGcQwvF3PunWFtdz9ToFnRrzuo-069WJg",
+  "userId": 4,
+  "testEmail": "user1771259608311@test.com"
 }

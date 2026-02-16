@@ -27,7 +27,7 @@ describe("🔐 Auth Endpoints E2E", () => {
   let authToken = "";
   let userId = "";
 
-  it("✅ should register a user", async () => {
+  it("should register a user", async () => {
     const res = await request(app).post("/api/auth/register").send({
       name: "Ankit",
       email: testEmail,
@@ -40,7 +40,7 @@ describe("🔐 Auth Endpoints E2E", () => {
     expect(res.body.user).toHaveProperty("email", testEmail);
   });
 
-  it("❌ should fail on duplicate registration", async () => {
+  it("should fail on duplicate registration", async () => {
     const res = await request(app).post("/api/auth/register").send({
       name: "Ankit",
       email: testEmail,
@@ -53,7 +53,7 @@ describe("🔐 Auth Endpoints E2E", () => {
     expect(res.body.error).toHaveProperty("email");
   });
 
-  it("✅ should login the user", async () => {
+  it("should login the user", async () => {
     const res = await request(app).post("/api/auth/login").send({
       email: testEmail,
       password: password,
@@ -71,11 +71,11 @@ describe("🔐 Auth Endpoints E2E", () => {
     fs.mkdirSync("tests", { recursive: true });
     fs.writeFileSync(
       filePath,
-      JSON.stringify({ authToken, userId, testEmail }, null, 2)
+      JSON.stringify({ authToken, userId, testEmail }, null, 2),
     );
   });
 
-  it("❌ should fail login with wrong password", async () => {
+  it("should fail login with wrong password", async () => {
     const res = await request(app).post("/api/auth/login").send({
       email: testEmail,
       password: "wrong123",

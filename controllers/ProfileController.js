@@ -4,9 +4,21 @@ import { generateRandomNum, imageValidator } from "../utils/helper.js";
 class ProfileController {
   static async index(req, res) {
     try {
-      const user = req.user;
-      return res.json({ status: 200, user });
+      const freshUser = await prisma.users.findUnique({
+        where: { id: req.user.id },
+      });
+
+      return res.json({
+        status: 200,
+        user: {
+          ...freshUser,
+          profile: freshUser.profile
+            ? `http://localhost:5000${freshUser.profile}`
+            : null,
+        },
+      });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ message: "Something went wrong!" });
     }
   }
@@ -35,13 +47,11 @@ class ProfileController {
       const imgExt = profile?.name.split(".");
       const imageName = generateRandomNum() + "." + imgExt[1];
       const uploadPath = process.cwd() + "/public/images/" + imageName;
-      profile.mv(uploadPath, (err) => {
-        if (err) throw err;
-      });
+      await profile.mv(uploadPath);
 
       await prisma.users.update({
         data: {
-          profile: imageName,
+          profile: `/images/${imageName}`,
         },
         where: {
           id: Number(id),
