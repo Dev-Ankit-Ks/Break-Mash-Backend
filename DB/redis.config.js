@@ -22,10 +22,12 @@
 
 import redis from "express-redis-cache";
 import "dotenv/config";
-console.log("REDIS_URL =", process.env.REDIS_URL);
+
+const redisUrl = new URL(process.env.REDIS_URL);
 
 const redisCache = redis({
-  url: process.env.REDIS_URL, // ✅ KEY CHANGE
+  host: redisUrl.hostname, // ✅ FORCE correct host
+  port: redisUrl.port, // ✅ FORCE correct port
   prefix: "master_backend",
   expire: 60 * 60,
 });
