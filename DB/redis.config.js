@@ -22,6 +22,7 @@
 
 import redis from "express-redis-cache";
 import "dotenv/config";
+console.log("REDIS_URL =", process.env.REDIS_URL);
 
 const redisCache = redis({
   url: process.env.REDIS_URL, // ✅ KEY CHANGE
