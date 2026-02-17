@@ -273,7 +273,7 @@ info:
     email: devankit.ks@gmail.com
 
 servers:
-  - url: http://localhost:5000/api
+  - url: /api
     description: Local development server
 
 tags:
